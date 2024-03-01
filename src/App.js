@@ -1,14 +1,18 @@
-import {useState} from 'react'
+// App.js
+
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-
-  const [isOpen , setIsOpen]=useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [dob, setDob] = useState('');
   const [phone, setPhone] = useState('');
-
+  const [usernameWarning, setUsernameWarning] = useState('');
+  const [emailWarning, setEmailWarning] = useState('');
+  const [dobWarning, setDobWarning] = useState('');
+  const [phoneWarning, setPhoneWarning] = useState('');
 
   const openModal = () => {
     setIsOpen(true);
@@ -16,35 +20,49 @@ function App() {
 
   const closeModal = () => {
     setIsOpen(false);
+    clearWarnings();
   };
 
+  const clearWarnings = () => {
+    setUsernameWarning('');
+    setEmailWarning('');
+    setDobWarning('');
+    setPhoneWarning('');
+  };
 
-  const handleSubmit = () => {
-    if (!username || !email || !dob || !phone) {
-      alert('Please fill in all the fields.');
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    clearWarnings(); // Clear previous warnings
+
+    let isValid = true;
+
+    // Check for empty fields
+    if (!username) {
+      setUsernameWarning('Please fill in all the fields.');
+      isValid = false;
+    }
+
+    if (!email) {
+      setEmailWarning('Please fill in all the fields.');
+      isValid = false;
+    }
+
+    if (!dob) {
+      setDobWarning('Please fill in all the fields.');
+      isValid = false;
+    }
+
+    if (!phone) {
+      setPhoneWarning('Please fill in all the fields.');
+      isValid = false;
+    }
+
+    if (!isValid) {
+      // If any field is empty, do not submit the form
       return;
     }
 
-    // Simple email validation (checking for the '@' symbol)
-    if (!email.includes('@')) {
-      alert('Invalid email. Please check your email address.');
-      return;
-    }
-
-    // Simple phone number validation (checking for 10 digits)
-    if (!/^\d{10}$/.test(phone)) {
-      alert('Invalid phone number. Please enter a 10-digit phone number.');
-      return;
-    }
-
-    // Simple date of birth validation (checking for a future date)
-    const currentDate = new Date();
-    const inputDate = new Date(dob);
-
-    if (inputDate > currentDate) {
-      alert('Invalid date of birth. Please enter a valid date.');
-      return;
-    }
+    // Perform other validations...
 
     // If all validations pass, you can perform further actions or reset the form
     alert('Form submitted successfully!');
@@ -55,50 +73,48 @@ function App() {
     closeModal();
   };
 
-
   return (
-    <div 
-    // className={` ${isOpen ? 'modal' : 'App'}`}
-    className='App'
-    >
+    <div className={`App ${isOpen ? 'modal' : ''}`}>
       <h1>User Details Modal</h1>
       <button className='buttonForm' onClick={openModal}>Open Form</button>
 
-      {isOpen && 
-      ( 
-        <div className="modal">
-                  <div className="modal-content" onClick={closeModal}>
-            <form>
-            <div className="form" onClick={(e) => e.stopPropagation()}>
-            <h1>Fill Details</h1>
-            <h4 htmlFor="username">Username:</h4>
-            <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+      {isOpen && (
+        <div className="modal" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <form className="form">
+              <h1>Fill Details</h1>
+              <div>
+                <label htmlFor="username">Username:</label>
+                <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                {usernameWarning && <p className="warning">{usernameWarning}</p>}
+              </div>
 
-            <h4 htmlFor="email">Email:</h4>
-            <input type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <div>
+                <label htmlFor="email">Email:</label>
+                <input type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                {emailWarning && <p className="warning">{emailWarning}</p>}
+              </div>
 
-            <h4 htmlFor="dob">Date of Birth:</h4>
-            <input type="date" id="dob" value={dob} onChange={(e) => setDob(e.target.value)} />
+              <div>
+                <label htmlFor="dob">Date of Birth:</label>
+                <input type="date" id="dob" value={dob} onChange={(e) => setDob(e.target.value)} />
+                {dobWarning && <p className="warning">{dobWarning}</p>}
+              </div>
 
-            <h4 >Phone Number:</h4>
-            <input type="text" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+              <div>
+                <label>Phone Number:</label>
+                <input type="text" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                {phoneWarning && <p className="warning">{phoneWarning}</p>}
+              </div>
 
-            <button className="submit-button" 
-            onClick={handleSubmit}
-            >
-              Submit
-            </button>
-          </div>
+              <button className="submit-button" onClick={handleSubmit}>
+                Submit
+              </button>
             </form>
-
-        {/* </div> */}
-      </div>
+          </div>
         </div>
-      )
-      }
-
+      )}
     </div>
-
   );
 }
 
