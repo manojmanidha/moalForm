@@ -57,7 +57,7 @@ function App() {
 
 
   return (
-    <div className="App">
+    <div className={` ${isOpen ? 'modal' : 'App'}`}>
       <h1>User Details Modal</h1>
       <button className='buttonForm' onClick={openModal}>Open Form</button>
 
