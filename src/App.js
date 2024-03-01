@@ -80,7 +80,7 @@ function App() {
             <h4 >Phone Number:</h4>
             <input type="text" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
 
-            <button className="buttonForm" 
+            <button className="submit-button" 
             onClick={handleSubmit}
             >
               Submit

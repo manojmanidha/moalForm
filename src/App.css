@@ -86,17 +86,16 @@ input {
   margin-bottom: 10px;
 }
 
-.submit {
-  background-color: green;
-  color: white;
-  padding: 10px;
-  cursor: pointer;
-  border: none;
+.submit-button{
+  background-color: rgb(33, 160, 239);
   border-radius: 5px;
-  width: 100%; /* Make the button full width */
+  padding: 10px 20px;
+  color: white;
+  border: none; /* Make the button full width */
 }
 
-.submit:hover {
+/* .submit:hover {
   background-color: darkgreen;
-}
+} */
+
 
