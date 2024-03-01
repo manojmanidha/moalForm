@@ -57,16 +57,16 @@ function App() {
 
 
   return (
-    <div className="modal">
+    <div className="App">
       <h1>User Details Modal</h1>
       <button className='buttonForm' onClick={openModal}>Open Form</button>
 
       {isOpen && 
-      (
-        <div className="modal-content" 
-        onClick={closeModal}
-        >
-          <div className="form" onClick={(e) => e.stopPropagation()}>
+      ( 
+        <div className="modal">
+                  <div className="modal-content" onClick={closeModal}>
+            <form>
+            <div className="form" onClick={(e) => e.stopPropagation()}>
             <h1>Fill Details</h1>
             <h4 htmlFor="username">Username:</h4>
             <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
@@ -86,8 +86,12 @@ function App() {
               Submit
             </button>
           </div>
+            </form>
+
         {/* </div> */}
-      </div>)
+      </div>
+        </div>
+      )
       }
 
     </div>
