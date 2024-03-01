@@ -79,9 +79,9 @@ function App() {
       <button className='buttonForm' onClick={openModal}>Open Form</button>
 
       {isOpen && (
-        <div className="modal" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <form className="form">
+        <div className="modal" >
+          <div className="modal-content" onClick={closeModal} >
+            <form className="form" onClick={(e) => e.stopPropagation()}>
               <h1>Fill Details</h1>
               <div>
                 <label htmlFor="username">Username:</label>
